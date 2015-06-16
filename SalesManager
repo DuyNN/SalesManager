@@ -1,0 +1,123 @@
+-- Created by Vertabelo (http://vertabelo.com)
+-- Last modification date: 2015-06-16 00:25:23.632
+
+
+
+
+-- tables
+-- Table: ChiTietHD
+CREATE TABLE ChiTietHD (
+    MaHD char(10)  NOT NULL,
+    MaLoaiSP char(10)  NOT NULL,
+    MaSP char(10)  NOT NULL,
+    HoaDon_MaHD char(10)  NOT NULL
+)
+;
+
+
+
+
+
+-- Table: HoaDon
+CREATE TABLE HoaDon (
+    MaHD char(10)  NOT NULL,
+    MaKH char(10)  NOT NULL,
+    MaSP char(10)  NOT NULL,
+    NgayLapHD smalldatetime  NULL,
+    SoLuong int  NOT NULL,
+    ThanhTien int  NOT NULL,
+    KhachHang_MaKH char(10)  NOT NULL,
+    SanPham_MaSP char(10)  NOT NULL,
+    CONSTRAINT HoaDon_pk PRIMARY KEY (MaHD)
+)
+;
+
+
+
+
+
+-- Table: KhachHang
+CREATE TABLE KhachHang (
+    MaKH char(10)  NOT NULL,
+    HoTenKH nvarchar(50)  NULL,
+    DiaChi nvarchar(100)  NULL,
+    SDT text  NULL,
+    CONSTRAINT KhachHang_pk PRIMARY KEY (MaKH)
+)
+;
+
+
+
+
+
+-- Table: LoaiSP
+CREATE TABLE LoaiSP (
+    MaLoaiSP char(10)  NOT NULL,
+    TenLoaiSP nvarchar(100)  NULL,
+    CONSTRAINT LoaiSP_pk PRIMARY KEY (MaLoaiSP)
+)
+;
+
+
+
+
+
+-- Table: SanPham
+CREATE TABLE SanPham (
+    MaSP char(10)  NOT NULL,
+    TenSP nvarchar(100)  NULL,
+    MaLoaiSP varchar(10)  NOT NULL,
+    DVTinh int  NULL,
+    DonGia real  NULL,
+    LoaiSP_MaLoaiSP char(10)  NOT NULL,
+    CONSTRAINT SanPham_pk PRIMARY KEY (MaSP)
+)
+;
+
+
+
+
+
+
+
+
+
+-- foreign keys
+-- Reference:  ChiTietHD_HoaDon (table: ChiTietHD)
+
+
+ALTER TABLE ChiTietHD ADD CONSTRAINT ChiTietHD_HoaDon 
+    FOREIGN KEY (HoaDon_MaHD)
+    REFERENCES HoaDon (MaHD)
+;
+
+-- Reference:  HoaDon_KhachHang (table: HoaDon)
+
+
+ALTER TABLE HoaDon ADD CONSTRAINT HoaDon_KhachHang 
+    FOREIGN KEY (KhachHang_MaKH)
+    REFERENCES KhachHang (MaKH)
+;
+
+-- Reference:  HoaDon_SanPham (table: HoaDon)
+
+
+ALTER TABLE HoaDon ADD CONSTRAINT HoaDon_SanPham 
+    FOREIGN KEY (SanPham_MaSP)
+    REFERENCES SanPham (MaSP)
+;
+
+-- Reference:  SanPham_LoaiSP (table: SanPham)
+
+
+ALTER TABLE SanPham ADD CONSTRAINT SanPham_LoaiSP 
+    FOREIGN KEY (LoaiSP_MaLoaiSP)
+    REFERENCES LoaiSP (MaLoaiSP)
+;
+
+
+
+
+
+-- End of file.
+
